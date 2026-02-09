@@ -1,3 +1,4 @@
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guards';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { LoginDTO } from './dto/login-user.dto';
 import { UsersService } from './users.service';
@@ -10,9 +11,11 @@ import { Body,
          HttpCode, 
          HttpStatus, 
          HttpException, 
-         Controller } 
+         Controller, 
+         UseGuards,
+         Req} 
 from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags('Users')
 @Controller('users')
@@ -67,7 +70,43 @@ export class UsersController {
       }
     }
   }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @Get('/getProfile')
+  @ApiOperation({summary:'get user profile'})
+  @ApiResponse({status : 200 , description: 'profile found'})
+  @ApiResponse({status : 401 , description : 'you dont authorice'})
+  async getUserProfile(@Req() req){
+    try{
+      if(!req.user.id){
+        return {
+          message:'invalid token'
+        }
+      }
+
+      const response=await this.usersService.getUserProfile(req.user.id)
+
+      if(!response || response==null){
+        return {
+          message:'we cant check you profile'
+        }
+      }
+
+      return response
+
+
+    }catch(error:any){
+      return {
+        message:`error : ${error.message}`
+      }
+
+    }
+
+  }
 }
+
+
 
 
 
