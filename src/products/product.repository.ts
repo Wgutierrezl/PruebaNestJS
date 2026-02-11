@@ -1,0 +1,38 @@
+import { Inject, Injectable } from "@nestjs/common";
+import { IProductRepository } from "./interfaces/product-repository.interface";
+import { Products } from "./entities/product.entities";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+
+@Injectable()
+export class ProductRepository implements IProductRepository{
+
+    constructor(
+        @InjectRepository(Products)
+        private readonly repo:Repository<Products>
+    ){}
+
+    createProduct(data: Products): Promise<Products | null> {
+        return this.repo.save(data)
+    }
+    
+    getAllProducts(): Promise<Products[] | null> {
+        return this.repo.find();
+    }
+    
+    getProductsByUserId(userId: number): Promise<Products[] | null> {
+        return this.repo.find({
+            where:{
+                user:{
+                    id:userId
+                }
+            }
+        })
+    }
+
+    async deleteProduct(id: number): Promise<void> {
+        await this.repo.delete(id)
+        return ;
+    }
+    
+}

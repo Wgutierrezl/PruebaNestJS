@@ -1,7 +1,9 @@
+import { Products } from "src/products/entities/product.entities";
 import { Entity,
         Column,
         PrimaryGeneratedColumn,
         CreateDateColumn,
+        OneToMany,
  } from "typeorm";
 
  @Entity('user')
@@ -24,4 +26,7 @@ import { Entity,
 
     @Column({default:true})
     isActive: boolean
+
+    @OneToMany(() => Products, products=> products.user)
+    product:Products[]
  }
