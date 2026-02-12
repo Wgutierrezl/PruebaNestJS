@@ -58,7 +58,6 @@ export class ProductsController {
 
   }
 
-
   @UseGuards(JwtAuthGuard)
   @Get('/getMyProducts')
   @ApiOperation({summary:'endpoint para obtener todos mis productos'})
@@ -91,4 +90,81 @@ export class ProductsController {
       }
     }
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/getProductsById/:id')
+  @ApiOperation({summary:'endpoint para obtener un producto por id'})
+  @ApiResponse({status:200 , description:'productos encontrado'})
+  @ApiResponse({status:404, description: 'aun no encontrado'})
+  @ApiResponse({status:401, description: 'no estas autenticado'})
+  @ApiBearerAuth()
+  async getProductsById(@Param('id') id:number){
+    try{
+      const response=await this.productsService.getProductById(id)
+
+      if(!response){
+        return {
+          message:'no existe el producto con ese id que buscas'
+        }
+      }
+
+      return response
+
+    }catch(error:any){
+      return {
+        message:`ha ocurrido un error inesperado ${error.message}`
+      }
+
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/getAllProducts')
+  @ApiOperation({summary:'endpoint para obtener todos los productos'})
+  @ApiResponse({status:200 , description:'productos encontrados'})
+  @ApiResponse({status:404, description: 'aun no hay productos registrados'})
+  @ApiResponse({status:401, description: 'no estas autenticado'})
+  @ApiBearerAuth()
+  async getAllProducts(){
+    try{
+      const response=await this.productsService.getAllProducts()
+
+      if(!response){
+        return {
+          message:'aun no hay productos creados'
+        }
+      }
+
+      return response
+
+    }catch(error:any){
+      return {
+        message:`ha ocurrido un error inesperado ${error.message}`
+      }
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('/deleteProductId/:id')
+  @ApiOperation({summary:'endpoint para obtener todos los productos'})
+  @ApiResponse({status:204 , description:'producto eliminado'})
+  @ApiResponse({status:404, description: 'no existe el producto que deseas eliminar'})
+  @ApiResponse({status:401, description: 'no estas autenticado'})
+  @ApiBearerAuth()
+  async deleteProductById(@Param('id') id:number){
+    try{
+      await this.productsService.deleteProductById(id)
+      return {
+        message:'producto eliminado correctamente'
+      }
+
+    }catch(error:any){
+      return {
+        message:`ha ocurrido un error inesperado ${error.message}`
+      }
+
+    }
+  }
+
+
 }
