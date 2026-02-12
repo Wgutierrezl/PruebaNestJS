@@ -11,6 +11,14 @@ export class ProductRepository implements IProductRepository{
         @InjectRepository(Products)
         private readonly repo:Repository<Products>
     ){}
+    
+    async getProductById(id: number): Promise<Products | null> {
+        return await this.repo.findOne({
+            where:{
+                id:id
+            }
+        })
+    }
 
     createProduct(data: Products): Promise<Products | null> {
         return this.repo.save(data)

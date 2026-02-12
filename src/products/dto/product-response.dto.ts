@@ -7,8 +7,8 @@ import {
  } from "class-validator";  
  import { UserResponseDTO } from "src/users/dto/user-response.dto";
 
-export class ProductResponse{
-
+export class ProductResponseDTO{
+    id:number
     name:string
     description:string
     quantity:number
