@@ -80,7 +80,13 @@ export class ProductsService implements IProductService{
             name:data.name,
             description:data.description,
             quantity:data.quantity,
-            user:data.user,
+            user: {
+                id:data.user.id,
+                name:data.user.name,
+                email:data.user.email,
+                dateCreated:data.user.dateCreated,
+                isActive:data.user.isActive
+            },
             createAt:data.createAt,
             isActive:data.isActive            
         }

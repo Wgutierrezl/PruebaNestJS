@@ -16,6 +16,9 @@ export class ProductRepository implements IProductRepository{
         return await this.repo.findOne({
             where:{
                 id:id
+            },
+            relations:{
+                user:true
             }
         })
     }
@@ -25,7 +28,11 @@ export class ProductRepository implements IProductRepository{
     }
     
     getAllProducts(): Promise<Products[] | null> {
-        return this.repo.find();
+        return this.repo.find({
+            relations:{
+                user:true
+            }
+        });
     }
     
     getProductsByUserId(userId: number): Promise<Products[] | null> {
@@ -34,6 +41,9 @@ export class ProductRepository implements IProductRepository{
                 user:{
                     id:userId
                 }
+            },
+            relations:{
+                user:true
             }
         })
     }
