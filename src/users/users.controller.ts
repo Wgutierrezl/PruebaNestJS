@@ -16,6 +16,8 @@ import { Body,
          Req} 
 from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { RolesGuard } from 'src/auth/guards/roles.guards';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 
 @ApiTags('Users')
 @Controller('users')
@@ -103,6 +105,38 @@ export class UsersController {
 
     }
 
+  }
+
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Roles('admin')
+  @ApiBearerAuth()
+  @Get('/getAllUsers')
+  @ApiOperation({summary:'get all users'})
+  @ApiResponse({status : 200 , description: 'users found'})
+  @ApiResponse({status : 401 , description : 'you dont authorice'})
+  async getAllUsers(@Req() req){
+    try{
+      if(!req.user.id){
+        return {
+          message:'invalid token'
+        }
+      }
+
+      const response=await this.usersService.getAll()
+
+      if(!response || response.length===0){
+        return {
+          message:'we cant find any user'
+        }
+      }
+
+      return response
+
+    }catch(error:any){
+      return {
+        message:`error ${error.message}`
+      }
+    }
   }
 }
 

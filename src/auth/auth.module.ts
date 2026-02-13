@@ -5,6 +5,8 @@ import { HashService } from './hash.service';
 import { HASHER_SERVICE, TOKEN_SERVICE } from './interfaces/auth.tokens';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import 'dotenv/config';
+import { ROLES_KEY } from './decorators/roles.decorator';
+import { RolesGuard } from './guards/roles.guards';
 
 @Module({
     imports:[
@@ -23,9 +25,13 @@ import 'dotenv/config';
         {
             provide: HASHER_SERVICE,
             useClass: HashService
-        }, 
+        },
+        {
+            provide: ROLES_KEY,
+            useClass:RolesGuard
+        },
         JwtStrategy      
     ],
-    exports:[TOKEN_SERVICE, HASHER_SERVICE]
+    exports:[TOKEN_SERVICE, HASHER_SERVICE, ROLES_KEY]
 })
 export class AuthModule {}
