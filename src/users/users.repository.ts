@@ -22,7 +22,10 @@ export class UserRepository implements IUserRepository{
     
     getUserByEmail(email: string): Promise<User | null> {
         return this.repo.findOne({
-            where:{email:email}
+            where:{email:email},
+            relations:{
+                role:true
+            }
         });
     }
 
@@ -30,12 +33,19 @@ export class UserRepository implements IUserRepository{
         return this.repo.findOne({
             where:{
                 id:userId
+            },
+            relations:{
+                role:true
             }
         })
     }
 
     getAllUsers(): Promise<User[] | null> {
-        return this.repo.find()
+        return this.repo.find({
+            relations:{
+                role:true
+            }
+        })
     }
     
 }

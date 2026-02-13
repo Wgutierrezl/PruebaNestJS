@@ -31,6 +31,7 @@ export class UsersService implements IUserService {
         userEntity.name=data.name
         userEntity.email=data.email
         userEntity.password=await this.hasher_service.encryptPassword(data.password)
+        userEntity.role={id:data.role_id} as any
 
         const userCreated=await this.repository.createUser(userEntity)
 
@@ -38,7 +39,8 @@ export class UsersService implements IUserService {
             return null
         }
 
-        return this.mapUserResponse(userCreated)
+        const userResponse=await this.repository.getUserProfile(userCreated.id)
+        return this.mapUserResponse(userResponse!)
     }
 
     async loginUser(data: LoginDTO): Promise<SessionDTO | null> {
@@ -109,6 +111,11 @@ export class UsersService implements IUserService {
             id:data.id,
             name:data.name,
             email:data.email,
+            role:{
+                id:data.role.id,
+                name:data.role.name,
+                description:data.role.description
+            },
             isActive:data.isActive,
             dateCreated:data.dateCreated
         }

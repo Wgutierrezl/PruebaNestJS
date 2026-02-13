@@ -18,7 +18,9 @@ export class ProductRepository implements IProductRepository{
                 id:id
             },
             relations:{
-                user:true
+                user:{
+                    role:true
+                }
             }
         })
     }
@@ -30,7 +32,9 @@ export class ProductRepository implements IProductRepository{
     getAllProducts(): Promise<Products[] | null> {
         return this.repo.find({
             relations:{
-                user:true
+                user:{
+                    role:true
+                }
             }
         });
     }
@@ -43,7 +47,9 @@ export class ProductRepository implements IProductRepository{
                 }
             },
             relations:{
-                user:true
+                user:{
+                    role:true
+                }
             }
         })
     }

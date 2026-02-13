@@ -24,4 +24,8 @@ import { IsEmail,
     @MinLength(6)
     password:string
 
+    @ApiProperty({example:1})
+    @IsNotEmpty()
+    role_id:number
+
  }

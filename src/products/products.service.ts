@@ -30,7 +30,8 @@ export class ProductsService implements IProductService{
             return null
         }
 
-        return this.mapProduct(productCreated)
+        const productResponse=await this.repo.getProductById(productCreated.id)
+        return this.mapProduct(productResponse!)
     }
 
     async getAllProducts(): Promise<ProductResponseDTO[] | null> {
@@ -84,6 +85,11 @@ export class ProductsService implements IProductService{
                 id:data.user.id,
                 name:data.user.name,
                 email:data.user.email,
+                role:{
+                    id:data.user.role.id,
+                    name:data.user.role.name,
+                    description:data.user.role.description
+                },
                 dateCreated:data.user.dateCreated,
                 isActive:data.user.isActive
             },

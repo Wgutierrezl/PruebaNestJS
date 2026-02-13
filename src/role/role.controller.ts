@@ -13,14 +13,14 @@ export class RoleController {
     private readonly roleService:IRoleService
   ) {}
 
-  @UseGuards(JwtAuthGuard)
+  /* @UseGuards(JwtAuthGuard) */
   @Post('/createRole')
   @ApiOperation({summary:'create role'})
   @ApiResponse({status:201, description:'role created'})
   @ApiResponse({status:400, description:'error creating role'})
   @ApiResponse({status:500, description:'internal server error'})
   @ApiResponse({status:401, description:'unauthorized'})
-  @ApiBearerAuth()
+  /* @ApiBearerAuth() */
   async createRole(@Body() data:CreateRoleDTO){
     try{
       const response=await this.roleService.createRole(data)
