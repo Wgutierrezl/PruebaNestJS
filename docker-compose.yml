@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  api:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-nest-container
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./database.sqlite:/app/database.sqlite
+    restart: unless-stopped
+    networks:
+      - nestjs-network
+  
+
+networks:
+  nestjs-network:
+    driver: bridge  
+
+
