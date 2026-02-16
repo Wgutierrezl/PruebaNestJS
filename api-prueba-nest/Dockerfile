@@ -26,7 +26,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Copiar base de datos (si es necesario)
-# COPY ./database.sqlite ./database.sqlite
+COPY ./database.sqlite ./database.sqlite
 
 # Instalar solo dependencias de producción
 RUN npm ci --only=production
