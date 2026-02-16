@@ -1,0 +1,2 @@
+export const TOKEN_SERVICE=Symbol('TOKEN_SERVICE')
+export const HASHER_SERVICE=Symbol('HASHER_SERVICE')
