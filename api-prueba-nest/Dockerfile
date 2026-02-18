@@ -35,7 +35,7 @@ RUN npm ci --only=production
 COPY --from=builder /app/dist ./dist
 
 # Exponer el puerto (ajusta según tu configuración)
-EXPOSE 3000
+EXPOSE 4000
 
 
 # Comando para iniciar la aplicación
