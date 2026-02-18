@@ -47,7 +47,7 @@ jobs:
       - name: 🏗️ Build, tag, and push Docker image to ECR
         run: |
           IMAGE_TAG=latest
-          docker build -t $IMAGE_NAME .
+          docker build -t $IMAGE_NAME ./api-prueba-nest
           docker tag $IMAGE_NAME:latest $ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REPOSITORY:$IMAGE_TAG
           echo "IMAGE_URI=$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
