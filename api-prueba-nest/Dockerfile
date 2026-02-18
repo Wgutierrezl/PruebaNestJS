@@ -37,5 +37,6 @@ COPY --from=builder /app/dist ./dist
 # Exponer el puerto (ajusta según tu configuración)
 EXPOSE 3000
 
+
 # Comando para iniciar la aplicación
 CMD ["npm", "run", "start:prod"]
