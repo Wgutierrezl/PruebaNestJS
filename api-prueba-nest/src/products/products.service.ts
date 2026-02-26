@@ -16,7 +16,7 @@ export class ProductsService implements IProductService{
 
     }
     async getProductEntityById(id: number): Promise<Products> {
-        const product=await this.getProductEntityById(id);
+        const product=await this.repo.getProductById(id);
         if(!product){
             throw new Error(`doesnt exist the product with the id ${id}` );
         }

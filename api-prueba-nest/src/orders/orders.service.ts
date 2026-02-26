@@ -23,7 +23,7 @@ export class OrdersService implements IOrdersService {
 
     async createOrder(data: CreateOrderDTO, userId: number): Promise<OrderResponseDTO> {
         const order=new Orders();
-        order.user={userId:userId} as any;
+        order.user={id:userId} as any;
         order.total=0; //POR EL MOMENTO, DESPUES SE QUITAN LOS DATOS QUEMADOS
 
         const orderSaved=await this._repo.saveOrder(order)
