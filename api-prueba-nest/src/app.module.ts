@@ -7,6 +7,8 @@ import { AuthModule } from './auth/auth.module';
 import { UsersController } from './users/users.controller';
 import { ProductsModule } from './products/products.module';
 import { RoleModule } from './role/role.module';
+import { OrdersModule } from './orders/orders.module';
+import { OrderdetailsModule } from './orderdetails/orderdetails.module';
 @Module({
   imports:[
     TypeOrmModule.forRoot({
@@ -18,7 +20,9 @@ import { RoleModule } from './role/role.module';
     AuthModule,
     UsersModule,
     ProductsModule,
-    RoleModule
+    RoleModule,
+    OrdersModule,
+    OrderdetailsModule
 
   ],
   controllers: [AppController],
