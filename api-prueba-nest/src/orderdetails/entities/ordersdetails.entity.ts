@@ -7,7 +7,7 @@ export class OrdersDetail{
     @PrimaryGeneratedColumn()
     id:number
 
-    @ManyToOne(()=> Orders, {eager:true})
+    @ManyToOne(()=> Orders, order=> order.orderDetails)
     @JoinColumn({name:'orderId'})
     order:Orders
 

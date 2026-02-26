@@ -15,6 +15,14 @@ export class ProductsService implements IProductService{
     ){
 
     }
+    async getProductEntityById(id: number): Promise<Products> {
+        const product=await this.getProductEntityById(id);
+        if(!product){
+            throw new Error(`doesnt exist the product with the id ${id}` );
+        }
+
+        return product;
+    }
 
     async createProduct(data: CreateProductDTO, userId: number): Promise<ProductResponseDTO | null> {
         const product=new Products()

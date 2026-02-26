@@ -16,3 +16,10 @@ export class ProductResponseDTO{
     createAt:Date
     isActive:boolean
 }
+
+
+export class ProductItemResponse{
+    id:number
+    name:string
+    description:string
+}

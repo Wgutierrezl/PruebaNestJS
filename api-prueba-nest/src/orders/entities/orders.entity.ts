@@ -1,6 +1,7 @@
-import { Column, PrimaryGeneratedColumn, Entity, CreateDateColumn, ManyToOne, JoinColumn } from "typeorm";
+import { Column, PrimaryGeneratedColumn, Entity, CreateDateColumn, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { User } from "src/users/entities/user.entity";
 import { Decimal128 } from "typeorm/browser";
+import { OrdersDetail } from "src/orderdetails/entities/ordersdetails.entity";
 
 
 @Entity('orders')
@@ -17,5 +18,8 @@ export class Orders{
 
     @CreateDateColumn()
     createAt:Date
+
+    @OneToMany(()=> OrdersDetail , detail=> detail.order, {eager:true})
+    orderDetails:OrdersDetail[]
 
 }
