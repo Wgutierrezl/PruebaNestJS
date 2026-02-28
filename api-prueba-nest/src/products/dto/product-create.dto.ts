@@ -3,6 +3,7 @@ import {
     IsString,
     IsNotEmpty,
     MinLength,
+    IsDecimal,
     IsNumber
  } from "class-validator";  
 
@@ -22,4 +23,9 @@ export class CreateProductDTO{
     @IsNumber()
     @IsNotEmpty()
     quantity:number
+
+    @ApiProperty({example: 12.95})
+    @IsNumber()
+    @IsNotEmpty()
+    price:number
 }

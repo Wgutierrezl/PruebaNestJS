@@ -12,6 +12,7 @@ export class ProductResponseDTO{
     name:string
     description:string
     quantity:number
+    price:number
     user:UserResponseDTO
     createAt:Date
     isActive:boolean
@@ -22,4 +23,5 @@ export class ProductItemResponse{
     id:number
     name:string
     description:string
+    price:number
 }

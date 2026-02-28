@@ -31,7 +31,7 @@ export class OrderdetailsService implements IOrderDetailService{
             detail.order=orders;
             detail.product=product;
             detail.quantity=item.quantity;
-            detail.total=5*detail.quantity
+            detail.total=product.price*item.quantity;
 
             details.push(detail);
 
@@ -52,7 +52,8 @@ export class OrderdetailsService implements IOrderDetailService{
             product:{
                 id:data.product.id,
                 name:data.product.name,
-                description:data.product.description
+                description:data.product.description,
+                price:data.product.price
             },
             quantity:data.quantity,
             total:Number(data.total)

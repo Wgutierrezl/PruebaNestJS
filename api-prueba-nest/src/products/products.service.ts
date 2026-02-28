@@ -30,6 +30,7 @@ export class ProductsService implements IProductService{
         product.name=data.name
         product.description=data.description
         product.quantity=data.quantity
+        product.price=data.price
         product.user={id:userId} as any
 
         const productCreated=await this.repo.createProduct(product)
@@ -89,6 +90,7 @@ export class ProductsService implements IProductService{
             name:data.name,
             description:data.description,
             quantity:data.quantity,
+            price:data.price,
             user: {
                 id:data.user.id,
                 name:data.user.name,
