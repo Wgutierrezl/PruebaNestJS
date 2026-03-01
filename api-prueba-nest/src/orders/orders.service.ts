@@ -32,6 +32,9 @@ export class OrdersService implements IOrdersService {
         }
 
         const orderDetailsSaved=await this._detailService.saveOrderItem(orderSaved, data.item);
+        if(!orderDetailsSaved){
+            throw new Error('no hemos logrado guardar los detalles de las ordenes');
+        }
 
         const orderResponse=await this._repo.getOrderById(orderSaved.id)
         if(!orderResponse){

@@ -15,6 +15,31 @@ export class ProductsService implements IProductService{
     ){
 
     }
+    
+    //ENDPOINT TO UPDATE PRODUCT QUANTITY
+    async updateProductQuantity(id: number, quantity: number): Promise<ProductResponseDTO> {
+        const product=await this.repo.getProductById(id);
+        console.log(`producto accedido desde el repo ${product}`);
+
+        if(!product){
+            throw new Error('no existe el producto que deseas actualizar la cantidad');
+        }
+
+        if(quantity>product.quantity){
+            throw new Error(`no tenemos la cantidad suficiente para el producto ${product.name}`);
+        }
+
+        product.quantity -= quantity;
+
+        const productUpdated=await this.repo.updateProduct(id, product);
+        console.log(`producto actualizado con su cantidad actualizada ${productUpdated}`);
+        if(!productUpdated){
+            throw new Error(`No hemos logrado actualizar la informacion del producto ${product.name} `);
+        }
+
+        return this.mapProduct(productUpdated);
+    }
+
     async getProductEntityById(id: number): Promise<Products> {
         const product=await this.repo.getProductById(id);
         if(!product){

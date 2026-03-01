@@ -26,12 +26,24 @@ export class OrderdetailsService implements IOrderDetailService{
 
         for(const item of data){
             const product=await this._productService.getProductEntityById(item.productId)
+            console.log(`producto accedido ${product.name}`);
+
+            if(!product){
+                throw new Error('No existe el producto que deseas agregar a la orden');
+            }
+
 
             const detail=new OrdersDetail()
             detail.order=orders;
             detail.product=product;
             detail.quantity=item.quantity;
             detail.total=product.price*item.quantity;
+
+            const productUpdated=await this._productService.updateProductQuantity(item.productId,item.quantity);
+
+            if(!productUpdated){
+                throw new Error('no logramos actualizar la cantidad del producto');
+            }
 
             details.push(detail);
 
@@ -42,7 +54,15 @@ export class OrderdetailsService implements IOrderDetailService{
             return null;
         }
 
-        return saved.map(map=> this.mapDetailResponse(map));
+        const detailsWithRelations = await Promise.all(
+            saved.map(detail => 
+                this._repo.getOrderDetailById(detail.id)
+            )
+        );
+
+        return detailsWithRelations.map(d => 
+            this.mapDetailResponse(d)
+        );
     }
 
 

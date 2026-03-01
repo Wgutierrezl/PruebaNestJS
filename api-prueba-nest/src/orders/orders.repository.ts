@@ -23,7 +23,9 @@ export class OrderRepository implements IOrderRepository{
             },
             relations:{
                 user:true,
-                orderDetails:true
+                orderDetails:{
+                    product:true
+                }
             }
         });
     }
@@ -36,7 +38,9 @@ export class OrderRepository implements IOrderRepository{
             },
             relations:{
                 user:true,
-                orderDetails:true
+                orderDetails:{
+                    product:true
+                }
             }
         })
     }

@@ -8,5 +8,6 @@ export interface IProductService{
     getProductById(id:number) : Promise<ProductResponseDTO | null>
     getProductEntityById(id:number) : Promise<Products>
     getProductsByUserId(userId:number) : Promise<ProductResponseDTO[] | null>
+    updateProductQuantity(id:number, quantity:number) : Promise<ProductResponseDTO>;
     deleteProductById(id:number)
 }
