@@ -15,6 +15,39 @@ export class ProductsService implements IProductService{
     ){
 
     }
+    
+    //ENDPOINT TO UPDATE PRODUCT QUANTITY
+    async updateProductQuantity(id: number, quantity: number): Promise<ProductResponseDTO> {
+        const product=await this.repo.getProductById(id);
+        console.log(`producto accedido desde el repo ${product}`);
+
+        if(!product){
+            throw new Error('no existe el producto que deseas actualizar la cantidad');
+        }
+
+        if(quantity>product.quantity){
+            throw new Error(`no tenemos la cantidad suficiente para el producto ${product.name}`);
+        }
+
+        product.quantity -= quantity;
+
+        const productUpdated=await this.repo.updateProduct(id, product);
+        console.log(`producto actualizado con su cantidad actualizada ${productUpdated}`);
+        if(!productUpdated){
+            throw new Error(`No hemos logrado actualizar la informacion del producto ${product.name} `);
+        }
+
+        return this.mapProduct(productUpdated);
+    }
+
+    async getProductEntityById(id: number): Promise<Products> {
+        const product=await this.repo.getProductById(id);
+        if(!product){
+            throw new Error(`doesnt exist the product with the id ${id}` );
+        }
+
+        return product;
+    }
 
     async createProduct(data: CreateProductDTO, userId: number): Promise<ProductResponseDTO | null> {
         const product=new Products()
@@ -22,6 +55,7 @@ export class ProductsService implements IProductService{
         product.name=data.name
         product.description=data.description
         product.quantity=data.quantity
+        product.price=data.price
         product.user={id:userId} as any
 
         const productCreated=await this.repo.createProduct(product)
@@ -81,6 +115,7 @@ export class ProductsService implements IProductService{
             name:data.name,
             description:data.description,
             quantity:data.quantity,
+            price:data.price,
             user: {
                 id:data.user.id,
                 name:data.user.name,

@@ -23,6 +23,9 @@ import { Column,
     @Column()
     quantity:number
 
+    @Column({type:'decimal'})
+    price:number
+
     @CreateDateColumn()
     createAt: Date
 

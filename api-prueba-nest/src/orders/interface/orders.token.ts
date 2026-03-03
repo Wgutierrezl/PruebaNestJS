@@ -1,0 +1,2 @@
+export const ORDERS_REPOSITORY=Symbol('ORDERS_REPOSITORY');
+export const ORDERS_SERVICE=Symbol('ORDERS_SERVICE');
