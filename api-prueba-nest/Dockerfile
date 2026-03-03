@@ -38,5 +38,6 @@ COPY --from=builder /app/dist ./dist
 EXPOSE 4000
 
 
+
 # Comando para iniciar la aplicación
 CMD ["npm", "run", "start:prod"]
