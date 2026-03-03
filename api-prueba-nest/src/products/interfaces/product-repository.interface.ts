@@ -7,4 +7,5 @@ export interface IProductRepository{
     getProductsByUserId(userId:number) : Promise<Products[] | null>
     deleteProduct(id:number) : Promise<void>
     getProductById(id:number) : Promise<Products | null>
+    updateProduct(id:number, data:Products) : Promise<Products | null>;
 }
